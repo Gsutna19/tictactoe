@@ -3,8 +3,21 @@ body {
 }
 
 div {
-    background-color: burlywood;
+    background-color: #FAD4CD;
     /* border: 1px solid red; */
+}
+
+#player, #computer {
+    padding: 16px;
+}
+
+#player {
+    background-color: #B3CAFA; 
+    margin-right: 8px;
+}
+
+#computer {
+    background-color: #D9FA9B;
 }
 
 .top, .mid, .bot {
@@ -13,16 +26,17 @@ div {
 }
 
 .top {
-    border-bottom: 6px solid grey;
+    border-bottom: 6px solid #6C80AD;
 }
 .left {
-    border-right: 6px solid grey;
+    border-right: 6px solid #6C80AD;
 }
 .right {
-    border-left: 6px solid grey;
+    border-left: 6px solid #6C80AD;
 }
 .bot {
-    border-top: 6px solid grey;
+    border-top: 6px solid #6C80AD;
+    margin-bottom: 32px;
 }
 
 #wrap, .versus {
@@ -32,10 +46,10 @@ div {
     align-items: center;
 }
 
-#board {
+#board, .against {
     display: flex;
     flex-wrap: wrap;
-    width: fit-content;
+    width: 676px;
     justify-content: center;
     /* align-items: center; */
 }

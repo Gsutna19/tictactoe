@@ -1,3 +1,41 @@
-/* body {
-    background-color: aquamarine;
-} */
+body {
+    margin: 0;
+}
+
+div {
+    background-color: burlywood;
+    /* border: 1px solid red; */
+}
+
+.top, .mid, .bot {
+    width: 200px;
+    height: 200px;
+}
+
+.top {
+    border-bottom: 6px solid grey;
+}
+.left {
+    border-right: 6px solid grey;
+}
+.right {
+    border-left: 6px solid grey;
+}
+.bot {
+    border-top: 6px solid grey;
+}
+
+#wrap, .versus {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#board {
+    display: flex;
+    flex-wrap: wrap;
+    width: fit-content;
+    justify-content: center;
+    /* align-items: center; */
+}

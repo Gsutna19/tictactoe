@@ -1,5 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
+
 body {
     margin: 0;
+}
+
+
+
+h1, h2 {
+    font-family: 'East Sea Dokdo', cursive;
+    margin: 4px;
+}
+
+h1 {
+    font-size: 72px;
+}
+
+h2 {
+    font-size: 48px;
 }
 
 div {
@@ -9,11 +26,23 @@ div {
 
 #player, #computer {
     padding: 16px;
+    border-radius: 16px;
+    border: 2px transparent solid;
+    font-family: 'East Sea Dokdo', cursive;
+    font-size: 32px;
+}
+
+#player:hover, #computer:hover {
+    border: 2px black solid;
+}
+
+#player:active, #computer:active {
+    opacity: 0.5;
 }
 
 #player {
     background-color: #B3CAFA; 
-    margin-right: 8px;
+    margin-right: 8px;@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
 }
 
 #computer {
@@ -21,8 +50,12 @@ div {
 }
 
 .top, .mid, .bot {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
+}
+
+.top:hover, .mid:hover, .bot:hover {
+    cursor: pointer;
 }
 
 .top {
@@ -49,7 +82,7 @@ div {
 #board, .against {
     display: flex;
     flex-wrap: wrap;
-    width: 676px;
+    width: 500px;
     justify-content: center;
     /* align-items: center; */
 }

@@ -11,26 +11,34 @@
     <div class="versus">
         <h2>Vs</h2>
         <div class="against">
-            <div id="player">Player</div>
-            <div id="computer">Computer</div>
+            <!-- Make these buttons -->
+            <button id="player">Player</button>
+            <button id="computer">Computer</button>
+        </div>
+        <div class="names">
+            <!-- MAke a space to add names if playing against player -->
         </div>
     </div>
 
     <div id="wrap">
         <h1>Tic Tac Toe!</h1>
         <div id="board">
-            <div class="left top"></div>
-            <div class="top"></div>
-            <div class="right top"></div>
-            <div class="left mid"></div>
-            <div class="mid"></div>
-            <div class="right mid"></div>
-            <div class="left bot"></div>
-            <div class="bot"></div>
-            <div class="right bot"></div>
+            <div class="left top" id="left-top" data-cell></div>
+            <div class="top" id="mid-top" data-cell></div>
+            <div class="right top" id="right-top" data-cell></div>
+            <div class="left mid" id="left-mid" data-cell></div>
+            <div class="mid" id="mid" data-cell></div>
+            <div class="right mid" id="right-mid" data-cell></div>
+            <div class="left bot" id="left-bot" data-cell></div>
+            <div class="bot" id="mid-bot" data-cell></div>
+            <div class="right bot" id="right-bot" data-cell></div>
         </div>
     </div>
+    <div class="winning-msg">
+        <div data-winning-msg-txt></div>
+        <button id="restartButton">Restart</button>
+    </div>
     
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
 </body>
 </html>

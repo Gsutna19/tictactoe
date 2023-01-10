@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
 
-
 *, *::after, *::before {
     box-sizing: border-box;
     font-family: 'East Sea Dokdo', cursive;
@@ -40,11 +39,13 @@ div {
     font-size: 2rem;
 }
 
-#player:hover, #computer:hover, .winning-msg button:hover {
+#player:hover, #computer:hover, .winning-msg button:hover,
+#play:hover {
     border: 2px black solid;
 }
 
-#player:active, #computer:active, .winning-msg button:active {
+#player:active, #computer:active, .winning-msg button:active,
+#play:active {
     opacity: 0.5;
 }
 
@@ -80,16 +81,25 @@ input {
     border-radius: 16px;
     font-size: 2rem;
     width: 200px;
-    margin: 16px;
 }
-
 
 input[type=text].p1 {
     background-color: #B3CAFA;
+    margin: 16px;
 }
 
 input[type=text].p2 {
     background-color: #D9FA9B;
+    margin-bottom: 16px;
+}
+
+#play {
+    font-size: 2rem;
+    background-color: #FAD4CD;
+    padding: 8px 32px;
+    border-radius: 16px;
+    border: 2px transparent solid;
+    cursor: pointer;
 }
 /* Game Board and Cells */
 .top, .mid, .bot {
@@ -118,14 +128,6 @@ input[type=text].p2 {
     align-items: center;
 }
 
-/* #board {
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    justify-content: center;
-    align-content: center;
-} */
-
 #board, .against {
     display: flex;
     flex-wrap: wrap;
@@ -153,7 +155,9 @@ input[type=text].p2 {
 }
 
 .board.x .cell:not(.x):not(.circle):hover::before,
-.board.x .cell:not(.x):not(.circle):hover::after {
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
     opacity: .4;
 }
 
@@ -179,22 +183,28 @@ input[type=text].p2 {
 }
 
 .cell.circle::before,
-.cell.circle::after {
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
     content: '';
     position: absolute;
     border-radius: 50%;
 }
 
-.cell.circle::before {
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before
+ {
     width: var(--mark-size);
     height: var(--mark-size);
     background-color: #D9FA9B;
 }
 
-.cell.circle::after {
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
     width: calc(var(--mark-size) * .65);
     height: calc(var(--mark-size) * .65);
     background-color: #FAD4CD;
+    opacity: 1;
 }
 
 .winning-msg {
@@ -234,4 +244,8 @@ input[type=text].p2 {
 
 .msg.circle {
     color: #D9FA9B;
+}
+
+.msg.draw {
+    color: #FAD4CD;
 }

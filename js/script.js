@@ -34,6 +34,8 @@ const gameLogic = (() => {
     const els = Gameboard.cellElements
     const playField = Gameboard.board
     const restartButton = document.getElementById('restartButton')
+    const p1Name = document.getElementById('p1')
+    const p2Name = document.getElementById('p2')
 
     function startGame() {
         circleTurn = false;
@@ -75,8 +77,8 @@ const gameLogic = (() => {
             winningMessageTextElement.classList.add('draw')
 
         } else {
-            winningMessageTextElement.innerText = `${circleTurn ? "0's" : 
-            "X's"} Wins!`
+            winningMessageTextElement.innerText = `${circleTurn ? p2Name.value : 
+            p1Name.value} Wins!`
             winningMessageTextElement.classList.add(circleTurn ? "circle" : "x" )
         }
         winningMessageElement.classList.add('show')
@@ -113,19 +115,69 @@ const gameLogic = (() => {
     return { start: startGame(), restart: restartGame() }
 })();
     
-const playerFactory = (name, mark) => {
+const displaySetPlayerName = (() => {
+    const btn = document.getElementById('player')
+    const names = document.getElementById('names')
+    // const pName = document.getElementById('p1').value;
+    function displaySetName() {
+        btn.addEventListener('click', nameBtnClick)
+    }
+
+    function nameBtnClick(e) {
+        const button = e.target
+        names.classList.add('show')
+    }
     
-    return {name, mark};
-};
+    return { display: displaySetName(), names }
+    
+})();
 
-function setName() {
+const setName = (() => {
+    const startBtn = document.getElementById("play")
+    const plBtn = document.getElementById("player")
+    const compBtn = document.getElementById("computer")
+    let name1
+    let name2
 
-    const pName = document.getElementById('p1').value;
-}
-// console.log(pName)
+    function startClick() {
+        startBtn.addEventListener('click', startBtnClick)
+    }
 
+    function startBtnClick(e) {
+        const p1Name = document.getElementById("p1").value;
+        const p2Name = document.getElementById("p2").value;
+        const p1 = p1Name
+        const button = e.target
 
-// const jeff = playerFactory('jeff', 'X');
-// console.log(jeff);
+        displaySetPlayerName.names.classList.remove('show')
+        changeBtnDisplay(p1Name, p2Name)
+    }
+
+    function changeBtnDisplay(p1, p2) {
+        plBtn.innerText = p1
+        compBtn.innerText = p2
+        name1 = p1
+        name2 = p2
+        // Use onmouseover and onmouse out events
+        plBtn.addEventListener("mouseover", handleMouseover)
+        compBtn.addEventListener("mouseover", handleMouseover)
+        plBtn.addEventListener("mouseout", handleMouseout)
+        compBtn.addEventListener("mouseout", handleMouseout)
+    }
+    function handleMouseover(e) {
+        const button = e.target
+        plBtn.innerText = "Change names"
+        compBtn.innerText = "Play Computer"
+    }
+    function handleMouseout(e) {
+        const button = e.target
+        plBtn.innerText = name1
+        compBtn.innerText = name2
+    }
+
+    return { name: startClick() }
+})();
+
+// Implement AI to play agains computer
 
 console.log(Gameboard.gameboard, Gameboard.handleClick)

@@ -1,13 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
 
+
+*, *::after, *::before {
+    box-sizing: border-box;
+    font-family: 'East Sea Dokdo', cursive;
+}
+
 body {
     margin: 0;
 }
 
-
+:root {
+    --cell-size: 150px;
+    --mark-size: calc(var(--cell-size) * .9);
+}
 
 h1, h2 {
-    font-family: 'East Sea Dokdo', cursive;
     margin: 4px;
 }
 
@@ -28,34 +36,65 @@ div {
     padding: 16px;
     border-radius: 16px;
     border: 2px transparent solid;
-    font-family: 'East Sea Dokdo', cursive;
-    font-size: 32px;
+    /* font-family: 'East Sea Dokdo', cursive; */
+    font-size: 2rem;
 }
 
-#player:hover, #computer:hover {
+#player:hover, #computer:hover, .winning-msg button:hover {
     border: 2px black solid;
 }
 
-#player:active, #computer:active {
+#player:active, #computer:active, .winning-msg button:active {
     opacity: 0.5;
 }
 
 #player {
     background-color: #B3CAFA; 
-    margin-right: 8px;@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
+    margin-right: 8px;
 }
 
 #computer {
     background-color: #D9FA9B;
 }
 
+/* NAME INPUT */
+.names {
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    /* margin: 8px; */
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    padding: 8px;
+    /* font-family: 'East Sea Dokdo', cursive; */
+    border: none;
+    border-radius: 16px;
+    font-size: 2rem;
+    width: 200px;
+    margin: 16px;
+}
+
+
+input[type=text].p1 {
+    background-color: #B3CAFA;
+}
+
+input[type=text].p2 {
+    background-color: #D9FA9B;
+}
+/* Game Board and Cells */
 .top, .mid, .bot {
     width: 150px;
     height: 150px;
-}
-
-.top:hover, .mid:hover, .bot:hover {
-    cursor: pointer;
 }
 
 .top {
@@ -79,10 +118,120 @@ div {
     align-items: center;
 }
 
+/* #board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+} */
+
 #board, .against {
     display: flex;
     flex-wrap: wrap;
     width: 500px;
     justify-content: center;
     /* align-items: center; */
+}
+
+#board {
+    justify-items: center;
+    align-items: center;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    opacity: .4;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+    background-color: #B3CAFA;
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    transform: rotate(-45deg);
+}
+
+.cell.circle::before,
+.cell.circle::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.circle::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+    background-color: #D9FA9B;
+}
+
+.cell.circle::after {
+    width: calc(var(--mark-size) * .65);
+    height: calc(var(--mark-size) * .65);
+    background-color: #FAD4CD;
+}
+
+.winning-msg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.winning-msg.show, .names.show {
+    display: flex;
+}
+
+.winning-msg button {
+    font-size: 3rem;
+    background-color: #FAD4CD;
+    padding: 16px;
+    border-radius: 16px;
+    border: 2px transparent solid;
+    cursor: pointer;
+}
+
+.msg {
+    background-color: transparent;
+}
+
+.msg.x {
+    color: #B3CAFA;
+}
+
+.msg.circle {
+    color: #D9FA9B;
 }

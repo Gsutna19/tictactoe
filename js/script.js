@@ -1,4 +1,3 @@
-
 const Gameboard = (() => {
     // Is it ok to have gameboard be public??
     const gameboard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -36,12 +35,18 @@ const gameLogic = (() => {
 })();
     
 const playerFactory = (name, mark) => {
+    
     return {name, mark};
 };
-    
+
+function setName() {
+
+    const pName = document.getElementById('p1').value;
+}
+// console.log(pName)
 
 
 // const jeff = playerFactory('jeff', 'X');
-
 // console.log(jeff);
+
 console.log(Gameboard.gameboard, Gameboard.handleClick)

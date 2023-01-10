@@ -12,30 +12,32 @@
         <h2>Vs</h2>
         <div class="against">
             <!-- Make these buttons -->
-            <button id="player">Player</button>
-            <button id="computer">Computer</button>
+            <button id="player" onclick="setName()">Player</button>
+            <button id="computer" onclick="">Computer</button>
         </div>
-        <div class="names">
+        <div class="names show">
             <!-- MAke a space to add names if playing against player -->
+            <input class="p1" type="text" id="p1" name="p1" placeholder="Player X">
+            <input class="p2" type="text" id="p2" name="p2" placeholder="Player 0">
         </div>
     </div>
 
     <div id="wrap">
         <h1>Tic Tac Toe!</h1>
-        <div id="board">
-            <div class="left top" id="left-top" data-cell></div>
-            <div class="top" id="mid-top" data-cell></div>
-            <div class="right top" id="right-top" data-cell></div>
-            <div class="left mid" id="left-mid" data-cell></div>
-            <div class="mid" id="mid" data-cell></div>
-            <div class="right mid" id="right-mid" data-cell></div>
-            <div class="left bot" id="left-bot" data-cell></div>
-            <div class="bot" id="mid-bot" data-cell></div>
-            <div class="right bot" id="right-bot" data-cell></div>
+        <div class="board" id="board">
+            <div class="left top cell" id="left-top" data-cell></div>
+            <div class="top cell circle" id="mid-top" data-cell></div>
+            <div class="right top cell" id="right-top" data-cell></div>
+            <div class="left mid cell" id="left-mid" data-cell></div>
+            <div class="mid cell" id="mid" data-cell></div>
+            <div class="right mid cell" id="right-mid" data-cell></div>
+            <div class="left bot cell" id="left-bot" data-cell></div>
+            <div class="bot cell" id="mid-bot" data-cell></div>
+            <div class="right bot cell" id="right-bot" data-cell></div>
         </div>
     </div>
     <div class="winning-msg">
-        <div data-winning-msg-txt></div>
+        <div class="msg" data-winning-msg-txt></div>
         <button id="restartButton">Restart</button>
     </div>
     

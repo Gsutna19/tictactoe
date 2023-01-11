@@ -6,6 +6,7 @@
 }
 
 body {
+    background-color: #FAD4CD;
     margin: 0;
 }
 
@@ -26,10 +27,10 @@ h2 {
     font-size: 48px;
 }
 
-div {
-    background-color: #FAD4CD;
+/* div {
+    
     /* border: 1px solid red; */
-}
+/* } */
 
 #player, #computer {
     padding: 16px;
@@ -137,7 +138,6 @@ input[type=text].p2 {
 }
 
 #board {
-    border: 1px red solid;
     justify-items: center;
     align-items: center;
 }

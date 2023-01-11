@@ -57,7 +57,7 @@ const gameLogic = (() => {
     }
 
     function handleClick(e) {
-        console.log(circleTurn)
+        // console.log(circleTurn)
         const cell = e.target
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
 
@@ -95,6 +95,8 @@ const gameLogic = (() => {
     function swapTurns() {
         circleTurn = !circleTurn;
     }
+    // Iterate through gameboard array, get indexes of spots
+    // without X_CLASS and CIRCLE_CLASS
     function setBoardHoverClass() {
         playField.classList.remove(X_CLASS)
         playField.classList.remove(CIRCLE_CLASS)
@@ -114,6 +116,25 @@ const gameLogic = (() => {
 
     return { start: startGame(), restart: restartGame() }
 })();
+
+// AI Logic
+// const playAI = (() => {
+//     const btn = document.getElementById("computer")
+//     function playComp() {
+//         btn.addEventListener('click', compPlayer)
+//     }
+//     function compPlayer(e) {
+//         const button = e.target
+//         // Start AI thinking
+//         if(circleTurn) {
+
+//         }
+//         // AI takes 2nd turn
+//     }
+
+//     return { play: playComp()}
+
+// })();
     
 const displaySetPlayerName = (() => {
     const btn = document.getElementById('player')
@@ -180,4 +201,4 @@ const setName = (() => {
 
 // Implement AI to play agains computer
 
-// console.log(Gameboard.gameboard, Gameboard.handleClick)
+console.log(gameLogic.comp)

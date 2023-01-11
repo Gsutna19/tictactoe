@@ -180,4 +180,4 @@ const setName = (() => {
 
 // Implement AI to play agains computer
 
-console.log(Gameboard.gameboard, Gameboard.handleClick)
+// console.log(Gameboard.gameboard, Gameboard.handleClick)

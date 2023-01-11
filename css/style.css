@@ -137,6 +137,7 @@ input[type=text].p2 {
 }
 
 #board {
+    border: 1px red solid;
     justify-items: center;
     align-items: center;
 }
@@ -248,4 +249,17 @@ input[type=text].p2 {
 
 .msg.draw {
     color: #FAD4CD;
+}
+
+@media (max-width: 450px) {
+    .top, .mid, .bot {
+        width: 110px;
+        height: 110px;
+    }
+    #board {
+        width: 336px;
+    }
+    :root {
+        --cell-size: 110px;
+    }
 }

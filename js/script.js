@@ -1,7 +1,6 @@
 
 const Gameboard = (() => {
-    // Is it ok to have gameboard be public??
-    // const gameboard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
     const cellElements = document.querySelectorAll('[data-cell]');
     const board = document.getElementById('board');
             

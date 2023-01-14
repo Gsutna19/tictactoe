@@ -251,6 +251,10 @@ input[type=text].p2 {
     color: #FAD4CD;
 }
 
+.white {
+    color: white;
+}
+
 @media (max-width: 450px) {
     .top, .mid, .bot {
         width: 110px;

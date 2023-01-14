@@ -1,18 +1,11 @@
 
 const Gameboard = (() => {
     // Is it ok to have gameboard be public??
-    const gameboard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    // const gameboard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     const cellElements = document.querySelectorAll('[data-cell]');
     const board = document.getElementById('board');
-    // cellElements.forEach(cell => {
-        //     cell.addEventListener('click', handleClick, {once: true })
-        // })
-        
-        // function handleClick(e) {
-            //     console.log('clicked')
-            // }
             
-    return {gameboard, cellElements, board};
+    return {cellElements, board};
 })();
         
 const gameLogic = (() => {
@@ -139,7 +132,6 @@ const gameLogic = (() => {
 const displaySetPlayerName = (() => {
     const btn = document.getElementById('player')
     const names = document.getElementById('names')
-    // const pName = document.getElementById('p1').value;
     function displaySetName() {
         btn.addEventListener('click', nameBtnClick)
     }
@@ -198,7 +190,5 @@ const setName = (() => {
 
     return { name: startClick() }
 })();
-
-// Implement AI to play agains computer
 
 console.log(gameLogic.comp)

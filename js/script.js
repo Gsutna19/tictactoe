@@ -55,8 +55,14 @@ const gameLogic = (() => {
         const cell = e.target
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
 
-        placeMark(cell, currentClass)
         if(playAI) {
+            placeMark(cell, currentClass)
+            if(checkWin(currentClass)) {
+                endGame(false)
+            } else if (isDraw()) {
+                endGame(true)
+            }
+            swapTurns();
             // MAke it play after player click
             compPlayer();
             // playAI = false;
@@ -107,7 +113,7 @@ const gameLogic = (() => {
         let freeSpots = emptySquares();
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
 
-        console.log(freeSpots)
+        // console.log(freeSpots)
         if(circleTurn) {
             freeSpots[0].classList.add(CIRCLE_CLASS)
             if(checkWin(currentClass)) {
@@ -119,6 +125,7 @@ const gameLogic = (() => {
                 setBoardHoverClass()
             }
         }
+        
         // for (let i = 0; i < els.length; i++) {
         //     if( !els[i].classList.contains(X_CLASS) || 
         //         !els[i].classList.contains(CIRCLE_CLASS)) {
@@ -138,7 +145,7 @@ const gameLogic = (() => {
     }
     // Iterate through gameboard array, get indexes of spots
     // without X_CLASS and CIRCLE_CLASS
-    console.log(emptySquares())
+    // console.log(emptySquares())
     function setBoardHoverClass() {
         playField.classList.remove(X_CLASS)
         playField.classList.remove(CIRCLE_CLASS)

@@ -62,10 +62,11 @@ const gameLogic = (() => {
                 endGame(false)
             } else if (isDraw()) {
                 endGame(true)
+            } else {
+                swapTurns();
+                compPlayer();
             }
-            swapTurns();
             // MAke it play after player click
-            compPlayer();
             // console.log(aiPlays)
             // aiPlays = false;
         } else {
@@ -80,6 +81,13 @@ const gameLogic = (() => {
             }
         }
     }
+    // function aiPlayer() {
+    //     if(aiPlays) {
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    // }
     function endGame(draw) {
         if (draw) {
             winningMessageTextElement.innerText = "Draw!"
@@ -111,8 +119,11 @@ const gameLogic = (() => {
     }
     function compPlayer() {
         aiPlays = true;
-        // Testing button
-        compBtn.classList.add("white")
+        // button
+        compBtn.innerText = "Evil PC"
+        const p2Name = document.getElementById("p2");
+        p2Name.value = "Evil PC"
+        // compBtn.classList.add("white")
         // Start AI thinking
         let freeSpots = emptySquares();
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
@@ -158,16 +169,16 @@ const gameLogic = (() => {
         })
     }
 
-    return { start: startGame(), restart: restartGame(), playAI: playComp(), aiPlays: aiPlays }
+    return { start: startGame(), restart: restartGame(), playAI: playComp(), aiPlayer: function(x) {return aiPlays;} }
 })();
 
 // AI Logic
 // const playAI = (() => {
 //     const btn = document.getElementById("computer")
 //     function playComp() {
-//         btn.addEventListener('click', compPlayer)
+//         btn.addEventListener('click', aiPlayer)
 //     }
-//     function compPlayer(e) {
+//     function aiPlayer(e) {
 //         const button = e.target
 //         // Testing button
 //         btn.classList.add("white")
@@ -215,7 +226,12 @@ const setName = (() => {
 
     function startBtnClick(e) {
         const p1Name = document.getElementById("p1").value;
-        const p2Name = document.getElementById("p2").value;
+        const p2Name = document.getElementById("p2");
+        if (gameLogic.aiPlayer()) {
+            p2Name.value = "Evil PC"
+        } else {
+            p2Name = p2Name.value
+        }
         const p1 = p1Name
         const button = e.target
 
@@ -226,7 +242,7 @@ const setName = (() => {
     function changeBtnDisplay(p1, p2) {
         plBtn.innerText = p1
         name1 = p1
-        if(gameLogic.aiPlays){
+        if(gameLogic.aiPlayer()){
             compBtn.innerText = "Evil PC"
             name2 = "Evil PC"
         } else {
@@ -241,10 +257,10 @@ const setName = (() => {
     }
 
     function handleMouseover(e) {
-        console.log(gameLogic.aiPlays)
+        console.log(gameLogic.aiPlayer())
         const button = e.target
         plBtn.innerText = "Change names"
-        if(gameLogic.aiPlays) {
+        if(gameLogic.aiPlayer()) {
             compBtn.innerText = "Can't change my Evil name!"
         } else {
             compBtn.innerText = "Play Computer"

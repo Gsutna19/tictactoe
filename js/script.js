@@ -9,7 +9,7 @@ const Gameboard = (() => {
         
 const gameLogic = (() => {
     let circleTurn
-    let playAI
+    let aiPlays
     const X_CLASS = 'x';
     const CIRCLE_CLASS = 'circle';
     const WINNING_COMBINATIONS = [
@@ -55,7 +55,8 @@ const gameLogic = (() => {
         const cell = e.target
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
 
-        if(playAI) {
+        if(aiPlays) {
+            // console.log(aiPlays)
             placeMark(cell, currentClass)
             if(checkWin(currentClass)) {
                 endGame(false)
@@ -65,7 +66,8 @@ const gameLogic = (() => {
             swapTurns();
             // MAke it play after player click
             compPlayer();
-            // playAI = false;
+            // console.log(aiPlays)
+            // aiPlays = false;
         } else {
             placeMark(cell, currentClass)
             if(checkWin(currentClass)) {
@@ -82,11 +84,13 @@ const gameLogic = (() => {
         if (draw) {
             winningMessageTextElement.innerText = "Draw!"
             winningMessageTextElement.classList.add('draw')
+            // aiPlays = false;
 
         } else {
             winningMessageTextElement.innerText = `${circleTurn ? p2Name.value : 
             p1Name.value} Wins!`
             winningMessageTextElement.classList.add(circleTurn ? "circle" : "x" )
+            // aiPlays = false;
         }
         winningMessageElement.classList.add('show')
     }
@@ -106,7 +110,7 @@ const gameLogic = (() => {
         compBtn.addEventListener('click', compPlayer)
     }
     function compPlayer() {
-        playAI = true;
+        aiPlays = true;
         // Testing button
         compBtn.classList.add("white")
         // Start AI thinking
@@ -125,17 +129,8 @@ const gameLogic = (() => {
                 setBoardHoverClass()
             }
         }
-        
-        // for (let i = 0; i < els.length; i++) {
-        //     if( !els[i].classList.contains(X_CLASS) || 
-        //         !els[i].classList.contains(CIRCLE_CLASS)) {
-        //         // Place Circle Mark
-        //         if(circleTurn) {
-        //             els[i].classList.add(CIRCLE_CLASS)
-        //             swapTurns();
-        //         }
-        //     }
-        // }
+
+        // SET COMPUTER'S NAME
 
         // AI takes 2nd turn
     }
@@ -163,7 +158,7 @@ const gameLogic = (() => {
         })
     }
 
-    return { start: startGame(), restart: restartGame(), playAI: playComp()}
+    return { start: startGame(), restart: restartGame(), playAI: playComp(), aiPlays: aiPlays }
 })();
 
 // AI Logic
@@ -205,7 +200,6 @@ const displaySetPlayerName = (() => {
     }
     
     return { display: displaySetName(), names }
-    
 })();
 
 const setName = (() => {
@@ -231,20 +225,32 @@ const setName = (() => {
 
     function changeBtnDisplay(p1, p2) {
         plBtn.innerText = p1
-        compBtn.innerText = p2
         name1 = p1
-        name2 = p2
-        // Use onmouseover and onmouse out events
+        if(gameLogic.aiPlays){
+            compBtn.innerText = "Evil PC"
+            name2 = "Evil PC"
+        } else {
+            compBtn.innerText = p2
+            name2 = p2
+        }
+        
         plBtn.addEventListener("mouseover", handleMouseover)
         compBtn.addEventListener("mouseover", handleMouseover)
         plBtn.addEventListener("mouseout", handleMouseout)
         compBtn.addEventListener("mouseout", handleMouseout)
     }
+
     function handleMouseover(e) {
+        console.log(gameLogic.aiPlays)
         const button = e.target
         plBtn.innerText = "Change names"
-        compBtn.innerText = "Play Computer"
+        if(gameLogic.aiPlays) {
+            compBtn.innerText = "Can't change my Evil name!"
+        } else {
+            compBtn.innerText = "Play Computer"
+        }
     }
+
     function handleMouseout(e) {
         const button = e.target
         plBtn.innerText = name1
@@ -253,5 +259,3 @@ const setName = (() => {
 
     return { name: startClick() }
 })();
-
-console.log(gameLogic.comp)

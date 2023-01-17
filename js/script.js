@@ -51,7 +51,7 @@ const gameLogic = (() => {
     }
 
     function handleClick(e) {
-        // console.log(circleTurn)
+        console.log(bestSpot())
         const cell = e.target
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
 
@@ -66,9 +66,6 @@ const gameLogic = (() => {
                 swapTurns();
                 compPlayer();
             }
-            // MAke it play after player click
-            // console.log(aiPlays)
-            // aiPlays = false;
         } else {
             placeMark(cell, currentClass)
             if(checkWin(currentClass)) {
@@ -81,13 +78,63 @@ const gameLogic = (() => {
             }
         }
     }
-    // function aiPlayer() {
-    //     if(aiPlays) {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // }
+    // MINMAX ALGORITHM
+    function bestSpot() {
+        return minmax([...els], X_CLASS).index;
+    }
+    function minmax(newBoard, mark) {
+        let availableSpots = emptySquares();
+        const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
+
+        if (checkWin(X_CLASS)) {
+            return {score: -10};
+        } else if (checkWin(CIRCLE_CLASS)) {
+            return {score: 10};
+        } else if (availableSpots.length === 0) {
+            return {score: 0}
+        }
+
+        let moves = [];
+        for (let i = 0; i < availableSpots.length; i++) {
+            let move = {};
+            move.index = newBoard[availableSpots[i]];
+            newBoard[availableSpots[i]] = mark;
+
+            if (mark == X_CLASS) {
+                let result = minmax(newBoard, CIRCLE_CLASS);
+                move.score = result.score;
+            } else {
+                let result = minmax(newBoard, X_CLASS);
+                move.score = result.score;
+            }
+
+            newBoard[availableSpots[i]] = move.index;
+
+            move.push(move);
+        }
+
+        let bestMove;
+        if(mark === X_CLASS) {
+            let bestScore = -10000;
+            for(let i = 0; i < moves.length; i++) {
+                if(moves[i].score > bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        } else {
+            let bestScore = 10000;
+            for(let i = 0; i < moves.length; i++) {
+                if(moves[i].score < bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }
+
+        return moves[bestMove];
+    }
+
     function endGame(draw) {
         if (draw) {
             winningMessageTextElement.innerText = "Draw!"
@@ -123,6 +170,7 @@ const gameLogic = (() => {
         compBtn.innerText = "Evil PC"
         const p2Name = document.getElementById("p2");
         p2Name.value = "Evil PC"
+
         // compBtn.classList.add("white")
         // Start AI thinking
         let freeSpots = emptySquares();

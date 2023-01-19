@@ -5,7 +5,7 @@ const Gameboard = (() => {
             
     return {cellElements, board};
 })();
-
+// All the logic for the game
 const gameLogic = (() => {
     let circleTurn
     let aiPlays

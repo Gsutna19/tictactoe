@@ -215,12 +215,12 @@ const gameLogic = (() => {
             }
         }
     }
+    // Iterate through gameboard array, get indexes of spots
+    // without X_CLASS and CIRCLE_CLASS
     function emptySquares() {
         return [...els].filter(cellClass => !cellClass.classList.contains(X_CLASS) && 
         !cellClass.classList.contains(CIRCLE_CLASS))
     }
-    // Iterate through gameboard array, get indexes of spots
-    // without X_CLASS and CIRCLE_CLASS
     function setBoardHoverClass() {
         playField.classList.remove(X_CLASS)
         playField.classList.remove(CIRCLE_CLASS)

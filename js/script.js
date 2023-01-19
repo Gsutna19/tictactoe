@@ -1,12 +1,11 @@
 
 const Gameboard = (() => {
-
     const cellElements = document.querySelectorAll('[data-cell]');
     const board = document.getElementById('board');
             
     return {cellElements, board};
 })();
-        
+
 const gameLogic = (() => {
     let circleTurn
     let aiPlays
@@ -30,7 +29,7 @@ const gameLogic = (() => {
     const p1Name = document.getElementById('p1')
     const p2Name = document.getElementById('p2')
     const compBtn = document.getElementById("computer")
-
+    // To reset board after a game is played.
     function startGame() {
         circleTurn = false;
         els.forEach(cell => {
@@ -51,26 +50,22 @@ const gameLogic = (() => {
     }
 
     function handleClick(e) {
-        // console.log(evaluate())
         const cell = e.target
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
-
+        // To start ai player
         if(aiPlays) {
-            // console.log(aiPlays)
-            if(cell.classList.contains(CIRCLE_CLASS)) {
-                
+            if(!cell.classList.contains(CIRCLE_CLASS)) {
+                placeMark(cell, currentClass)
+            } else if (cell.classList.contains(CIRCLE_CLASS)) {
+                handleClick();
             }
-            placeMark(cell, currentClass)
             if(checkWin(currentClass)) {
                 endGame(false)
-                // console.log(evaluate())
             } else if (isDraw()) {
                 endGame(true)
-                // console.log(evaluate())
             } else {
                 swapTurns();
                 compPlayer();
-                // console.log(evaluate())
             }
         } else {
             placeMark(cell, currentClass)
@@ -84,21 +79,20 @@ const gameLogic = (() => {
             }
         }
     }
-    // MINMAX ALGORITHM
+    // Returns a value to indicate the state of the board
     function evaluate() {
         if(checkWin(X_CLASS)) {
-            // console.log("checkWIn X")
             return 10;
         } else if (checkWin(CIRCLE_CLASS)) {
-            // console.log("checkWIn 0")
             return -10;
         } else if (isDraw()){
-            // console.log("isDraw")
             return 0
         }
     }
+    // MINMAX ALGORITHM
+    // To find the best move possible
     function minmax(depth, isMax) {
-        // Code to end the game?
+        
         let score = evaluate();
         let freeSquares = emptySquares();
 
@@ -112,6 +106,7 @@ const gameLogic = (() => {
             return 0;
         }
 
+        // If it's 'X' turn
         if(isMax) {
             let best = -10000;
 
@@ -119,15 +114,15 @@ const gameLogic = (() => {
                 // If there are any free squares to play
                 if(freeSquares.length > 0) {
                     freeSquares[i].classList.add(X_CLASS);
-                    // console.log(freeSquares)
-                    
                     best = Math.max(best, minmax(depth + 1, !isMax));
                     // Undo the move
                     freeSquares[i].classList.remove(X_CLASS);
                 }
             }
             return best;
-        } else {
+        } 
+        // If it's 'O' turn. P.S. AI is always Circle
+        else {
             let best = 10000;
             
             for(let i = 0; i < freeSquares.length; i++) {
@@ -136,10 +131,6 @@ const gameLogic = (() => {
                     
 
                     best = Math.min(best, minmax(depth + 1, !isMax));
-                    // if(best == -10) {
-                    //     console.log(freeSquares[i].id)
-                    // }
-
                     // Undo move
                     freeSquares[i].classList.remove(CIRCLE_CLASS);
                 }
@@ -149,48 +140,40 @@ const gameLogic = (() => {
             return best;
         }
     }
+    // Calls minmax and plays best move.
     function bestMove() {
         let bestVal = 10000;
         let freeSquares = emptySquares();
         let cellId;
-        // console.log(freeSquares)
         
         for (i = 0; i < freeSquares.length; i++) {
-            // console.log(i)
             if(freeSquares.length > 0){
                 freeSquares[i].classList.add(CIRCLE_CLASS);
                 let moveVal = minmax(0, true);
-                // console.log(`moveVal ${moveVal}`)
                 
-                // Undo the move?
                 freeSquares[i].classList.remove(CIRCLE_CLASS);
 
                 if(moveVal < bestVal) {
                     bestVal = moveVal;
                     cellId = freeSquares[i].id;
                     console.log(i)
-                    // console.log(freeSquares[i].id)
                 }
-                // Find a way to store index of best move, and play there.
             }
         }
         // Return the optimal move cell and add the CIRCLE_CLASS to it.
         document.getElementById(`${cellId}`).classList.add(CIRCLE_CLASS);
     }
-
     // END MINMAX
 
     function endGame(draw) {
         if (draw) {
             winningMessageTextElement.innerText = "Draw!"
             winningMessageTextElement.classList.add('draw')
-            // aiPlays = false;
 
         } else {
             winningMessageTextElement.innerText = `${circleTurn ? p2Name.value : 
             p1Name.value} Wins!`
             winningMessageTextElement.classList.add(circleTurn ? "circle" : "x" )
-            // aiPlays = false;
         }
         winningMessageElement.classList.add('show')
     }
@@ -206,6 +189,7 @@ const gameLogic = (() => {
     function swapTurns() {
         circleTurn = !circleTurn;
     }
+    // To start AI thinking
     function playComp() {
         compBtn.addEventListener('click', compPlayer)
     }
@@ -217,12 +201,9 @@ const gameLogic = (() => {
         p2Name.value = "Evil PC"
 
         // Start AI thinking
-        // let freeSpots = emptySquares();
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
 
-        // console.log(freeSpots)
         if(circleTurn) {
-            // freeSpots[0].classList.add(CIRCLE_CLASS)
             bestMove()
             if(checkWin(currentClass)) {
                 endGame(false)
@@ -233,10 +214,6 @@ const gameLogic = (() => {
                 setBoardHoverClass()
             }
         }
-
-        // SET COMPUTER'S NAME
-
-        // AI takes 2nd turn
     }
     function emptySquares() {
         return [...els].filter(cellClass => !cellClass.classList.contains(X_CLASS) && 
@@ -244,7 +221,6 @@ const gameLogic = (() => {
     }
     // Iterate through gameboard array, get indexes of spots
     // without X_CLASS and CIRCLE_CLASS
-    // console.log(emptySquares())
     function setBoardHoverClass() {
         playField.classList.remove(X_CLASS)
         playField.classList.remove(CIRCLE_CLASS)
@@ -265,32 +241,6 @@ const gameLogic = (() => {
     return { start: startGame(), restart: restartGame(), playAI: playComp(), aiPlayer: function(x) {return aiPlays;} }
 })();
 
-// AI Logic
-// const playAI = (() => {
-//     const btn = document.getElementById("computer")
-//     function playComp() {
-//         btn.addEventListener('click', aiPlayer)
-//     }
-//     function aiPlayer(e) {
-//         const button = e.target
-//         // Testing button
-//         btn.classList.add("white")
-//         // Place Circle Mark
-//         board = gameLogic.els
-//         console.log(board)
-//         // Start AI thinking
-//         for (let i = 0; i < board.length; i++) {
-//             if( !board[i].classList.contains(gameLogic.X_CLASS) ) {
-//                 board[i].classList.add(gameLogic.CIRCLE_CLASS)
-//             }
-//         }
-
-//         // AI takes 2nd turn
-//     }
-
-//     return { play: playComp() }
-
-// })();
 const displaySetPlayerName = (() => {
     const btn = document.getElementById('player')
     const names = document.getElementById('names')
@@ -298,8 +248,7 @@ const displaySetPlayerName = (() => {
         btn.addEventListener('click', nameBtnClick)
     }
 
-    function nameBtnClick(e) {
-        const button = e.target
+    function nameBtnClick() {
         names.classList.add('show')
     }
     
@@ -317,7 +266,7 @@ const setName = (() => {
         startBtn.addEventListener('click', startBtnClick)
     }
 
-    function startBtnClick(e) {
+    function startBtnClick() {
         const p1Name = document.getElementById("p1").value;
         let p2Name = document.getElementById("p2");
         if (gameLogic.aiPlayer()) {
@@ -326,7 +275,6 @@ const setName = (() => {
             p2Name = document.getElementById("p2").value;
         }
         const p1 = p1Name
-        const button = e.target
 
         displaySetPlayerName.names.classList.remove('show')
         changeBtnDisplay(p1Name, p2Name)
@@ -349,9 +297,7 @@ const setName = (() => {
         compBtn.addEventListener("mouseout", handleMouseout)
     }
 
-    function handleMouseover(e) {
-        // console.log(gameLogic.aiPlayer())
-        const button = e.target
+    function handleMouseover() {
         plBtn.innerText = "Change names"
         if(gameLogic.aiPlayer()) {
             compBtn.innerText = "Can't change my Evil name!"
@@ -360,8 +306,7 @@ const setName = (() => {
         }
     }
 
-    function handleMouseout(e) {
-        const button = e.target
+    function handleMouseout() {
         plBtn.innerText = name1
         if(gameLogic.aiPlayer()){
             compBtn.innerText = "Evil PC"

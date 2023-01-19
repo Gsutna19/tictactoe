@@ -57,6 +57,9 @@ const gameLogic = (() => {
 
         if(aiPlays) {
             // console.log(aiPlays)
+            if(cell.classList.contains(CIRCLE_CLASS)) {
+                
+            }
             placeMark(cell, currentClass)
             if(checkWin(currentClass)) {
                 endGame(false)
@@ -84,10 +87,13 @@ const gameLogic = (() => {
     // MINMAX ALGORITHM
     function evaluate() {
         if(checkWin(X_CLASS)) {
+            // console.log("checkWIn X")
             return 10;
         } else if (checkWin(CIRCLE_CLASS)) {
+            // console.log("checkWIn 0")
             return -10;
-        } else {
+        } else if (isDraw()){
+            // console.log("isDraw")
             return 0
         }
     }
@@ -102,7 +108,7 @@ const gameLogic = (() => {
         if (score == -10) {
             return score;
         }
-        if (emptySquares().length == 0) {
+        if (freeSquares.length == 0) {
             return 0;
         }
 
@@ -113,7 +119,8 @@ const gameLogic = (() => {
                 // If there are any free squares to play
                 if(freeSquares.length > 0) {
                     freeSquares[i].classList.add(X_CLASS);
-
+                    // console.log(freeSquares)
+                    
                     best = Math.max(best, minmax(depth + 1, !isMax));
                     // Undo the move
                     freeSquares[i].classList.remove(X_CLASS);
@@ -122,46 +129,53 @@ const gameLogic = (() => {
             return best;
         } else {
             let best = 10000;
-
+            
             for(let i = 0; i < freeSquares.length; i++) {
                 if(freeSquares.length > 0) {
                     freeSquares[i].classList.add(CIRCLE_CLASS);
+                    
 
                     best = Math.min(best, minmax(depth + 1, !isMax));
+                    // if(best == -10) {
+                    //     console.log(freeSquares[i].id)
+                    // }
 
                     // Undo move
                     freeSquares[i].classList.remove(CIRCLE_CLASS);
                 }
 
             }
+            
             return best;
         }
     }
     function bestMove() {
-        let bestVal = -10000;
+        let bestVal = 10000;
         let freeSquares = emptySquares();
-        let index = 0;
-        console.log(freeSquares)
+        let cellId;
+        // console.log(freeSquares)
         
         for (i = 0; i < freeSquares.length; i++) {
-            console.log(i)
+            // console.log(i)
             if(freeSquares.length > 0){
-                freeSquares[i].classList.add(X_CLASS);
-                let moveVal = minmax(0, false);
-                console.log(moveVal)
+                freeSquares[i].classList.add(CIRCLE_CLASS);
+                let moveVal = minmax(0, true);
+                // console.log(`moveVal ${moveVal}`)
                 
                 // Undo the move?
-                freeSquares[i].classList.remove(X_CLASS);
+                freeSquares[i].classList.remove(CIRCLE_CLASS);
 
-                if(moveVal > bestVal) {
+                if(moveVal < bestVal) {
                     bestVal = moveVal;
+                    cellId = freeSquares[i].id;
+                    console.log(i)
+                    // console.log(freeSquares[i].id)
                 }
                 // Find a way to store index of best move, and play there.
             }
-            index++;
         }
-        // console.log(freeSquares[index])
-        freeSquares[index-1].classList.add(CIRCLE_CLASS);
+        // Return the optimal move cell and add the CIRCLE_CLASS to it.
+        document.getElementById(`${cellId}`).classList.add(CIRCLE_CLASS);
     }
 
     // END MINMAX
@@ -336,7 +350,7 @@ const setName = (() => {
     }
 
     function handleMouseover(e) {
-        console.log(gameLogic.aiPlayer())
+        // console.log(gameLogic.aiPlayer())
         const button = e.target
         plBtn.innerText = "Change names"
         if(gameLogic.aiPlayer()) {

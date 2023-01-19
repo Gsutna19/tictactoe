@@ -161,7 +161,7 @@ const gameLogic = (() => {
             }
         }
         // Return the optimal move cell and add the CIRCLE_CLASS to it.
-        document.getElementById(`${cellId}`).classList.add(CIRCLE_CLASS);
+        document.getElementById(cellId).classList.add(CIRCLE_CLASS);
     }
     // END MINMAX
 

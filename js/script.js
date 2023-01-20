@@ -109,10 +109,10 @@ const gameLogic = (() => {
         // If it's 'X' turn
         if(isMax) {
             let best = -10000;
-
             for (let i = 0; i < freeSquares.length; i++) {
                 // If there are any free squares to play
                 if(freeSquares.length > 0) {
+                    // Play on each empty cell
                     freeSquares[i].classList.add(X_CLASS);
                     best = Math.max(best, minmax(depth + 1, !isMax));
                     // Undo the move

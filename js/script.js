@@ -165,6 +165,7 @@ const gameLogic = (() => {
     }
     // END MINMAX
 
+    // END GAME logic
     function endGame(draw) {
         if (draw) {
             winningMessageTextElement.innerText = "Draw!"
@@ -196,9 +197,9 @@ const gameLogic = (() => {
     function compPlayer() {
         aiPlays = true;
         // button
-        compBtn.innerText = "Evil PC"
+        compBtn.innerText = "Goblin AI"
         const p2Name = document.getElementById("p2");
-        p2Name.value = "Evil PC"
+        p2Name.value = "Goblin AI"
 
         // Start AI thinking
         const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
@@ -270,7 +271,7 @@ const setName = (() => {
         const p1Name = document.getElementById("p1").value;
         let p2Name = document.getElementById("p2");
         if (gameLogic.aiPlayer()) {
-            p2Name.value = "Evil PC"
+            p2Name.value = "Goblin AI"
         } else {
             p2Name = document.getElementById("p2").value;
         }
@@ -284,8 +285,8 @@ const setName = (() => {
         plBtn.innerText = p1
         name1 = p1
         if(gameLogic.aiPlayer()){
-            compBtn.innerText = "Evil PC"
-            name2 = "Evil PC"
+            compBtn.innerText = "Goblin AI"
+            name2 = "Goblin AI"
         } else {
             compBtn.innerText = p2
             name2 = p2
@@ -309,7 +310,7 @@ const setName = (() => {
     function handleMouseout() {
         plBtn.innerText = name1
         if(gameLogic.aiPlayer()){
-            compBtn.innerText = "Evil PC"
+            compBtn.innerText = "Goblin AI"
         } else {
             compBtn.innerText = name2
         }

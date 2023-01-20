@@ -120,7 +120,7 @@ const gameLogic = (() => {
                 }
             }
             return best;
-        } 
+        }
         // If it's 'O' turn. P.S. AI is always Circle
         else {
             let best = 10000;
